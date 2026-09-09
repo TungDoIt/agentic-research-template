@@ -1,0 +1,317 @@
+Create a reusable project template for autonomous, agentic research.
+
+## Purpose
+
+The template will be used as follows:
+
+1. A human creates a new research project from the template.
+2. The human provides a research objective and only the minimum necessary project-specific context, constraints, files, or data.
+3. An AI research agent is told to start.
+4. The agent autonomously determines how to pursue the objective: searching literature, reading primary sources, analyzing data, performing calculations, writing/running code, building models, generating and testing hypotheses, using subagents, and revising its research direction.
+5. The agent continues iteratively until the research objective is resolved as far as available evidence permits or a defined stopping condition is reached.
+6. The project directory preserves enough state, evidence, provenance, reasoning outcomes, and outputs that another agent or a human researcher can understand, audit, and continue the work.
+
+The system should minimize routine human intervention. Humans should primarily define the research problem, supply inaccessible/private information, and intervene only at genuinely consequential decision points.
+
+## Design principles
+
+Design the system around these principles:
+
+* **Minimal initialization.** Require as little human-written setup as reasonably possible.
+* **Objective-driven autonomy.** Specify goals and constraints rather than prescribing a fixed sequence of research steps.
+* **Agent-readable and human-readable.** All important state and instructions should be understandable without proprietary tooling.
+* **Persistent research state.** The agent must be able to stop, resume, or hand the project to another agent without losing the intellectual state of the investigation.
+* **Evidence over accumulation.** The purpose is to resolve the research objective, not merely collect information.
+* **Adaptive planning.** The agent should continually decide what research action has the highest expected information value.
+* **Scientific skepticism.** Maintain competing hypotheses where appropriate and actively seek contradictory evidence.
+* **Quantitative verification.** Important quantitative claims should be checked by calculation, code, primary data, or authoritative sources where possible.
+* **Source provenance.** Claims and evidence should remain traceable to their origins.
+* **Explicit uncertainty.** Clearly distinguish observation, sourced fact, inference, assumption, hypothesis, and speculation.
+* **Diminishing-return stopping.** Research should terminate when further available work is unlikely to materially change the conclusion.
+* **Low bureaucracy.** Do not create files, logs, schemas, or procedures merely for organizational completeness.
+* **Tool agnostic.** The core project should remain usable by different capable AI agents and by humans.
+* **Recoverability.** A new agent should be able to inspect the project and determine what has been done, why, what is currently believed, and what should happen next.
+
+## Autonomous research loop
+
+Design the template so that an agent naturally follows approximately this loop:
+
+Research objective
+→ inspect current state
+→ identify the most consequential uncertainty
+→ choose the highest-value next research action
+→ execute it
+→ evaluate the resulting evidence
+→ update claims/hypotheses/state
+→ challenge the leading interpretation
+→ determine whether the objective is resolved
+→ continue or terminate.
+
+The agent should be free to choose among actions such as:
+
+* literature and web search
+* primary-source retrieval and reading
+* citation tracing
+* calculations and dimensional/order-of-magnitude checks
+* coding and simulation
+* analysis of supplied datasets
+* comparison of theories or models
+* hypothesis generation
+* falsification attempts
+* independent replication of important reasoning
+* parallel investigation by subagents
+* synthesis of evidence
+* identification of decisive experiments or missing information
+
+Do not hard-code these into a mandatory sequence.
+
+## Information-value principle
+
+The system should encourage the agent to choose research actions according to expected scientific value rather than convenience.
+
+Conceptually:
+
+`next action = action expected to reduce the most consequential uncertainty at reasonable cost`
+
+Do not require a numerical information-gain calculation unless useful.
+
+The agent should avoid repeatedly searching or analyzing questions that are already sufficiently resolved.
+
+## Research state
+
+Create a compact mechanism for maintaining the current intellectual state of the project.
+
+It should make immediately visible:
+
+* current best answer or leading interpretation
+* confidence and important uncertainty
+* established facts
+* important observations
+* competing hypotheses
+* evidence for and against them
+* unresolved contradictions
+* assumptions
+* highest-priority open questions
+* current research direction
+* next likely action
+* blockers requiring external information or human intervention
+
+This state should remain concise. Detailed evidence, calculations, and source notes should live elsewhere and be referenced rather than duplicated.
+
+## Evidence discipline
+
+Create conventions that allow both humans and agents to distinguish:
+
+* direct experimental/data observation
+* primary-source result
+* secondary-source statement
+* reproduced calculation
+* agent inference
+* working assumption
+* hypothesis
+* unresolved speculation
+
+Important conclusions should be traceable to supporting evidence.
+
+When sources disagree, preserve the disagreement rather than silently merging them.
+
+The system should discourage citation laundering: secondary sources should not be presented as primary evidence when the original source is available.
+
+## Human intervention policy
+
+The autonomous agent should NOT interrupt the human for routine decisions.
+
+It should make reasonable reversible decisions itself and document consequential assumptions.
+
+Human intervention should normally be requested only when:
+
+* essential private or inaccessible information is missing;
+* a decision would substantially redefine the research objective;
+* multiple consequential directions remain and choosing between them depends on human priorities;
+* an action would consume significant real-world resources;
+* an experiment or external action requires authorization;
+* available evidence cannot resolve a consequential ambiguity;
+* or continuing would violate an explicit project constraint.
+
+## Completion criteria
+
+Create a clear completion protocol.
+
+The agent should terminate autonomous investigation when one or more of the following applies:
+
+1. The research objective has a defensible answer supported by available evidence.
+2. The major competing explanations have been adequately evaluated.
+3. Additional accessible research has low expected probability of materially changing the conclusion.
+4. Remaining uncertainty depends primarily on unavailable information or new experimental evidence.
+5. A project-specific stopping condition has been reached.
+
+Completion must not imply false certainty.
+
+A project may legitimately finish with:
+
+* a strong conclusion;
+* a probabilistic conclusion;
+* several surviving hypotheses;
+* a negative result;
+* or “currently unresolvable,” accompanied by an explanation of what evidence would resolve it.
+
+## Final research output
+
+The template should provide a place and format for a final synthesis containing, where applicable:
+
+* research question
+* concise answer
+* confidence
+* key evidence
+* quantitative results
+* competing explanations considered
+* strongest counterevidence
+* unresolved uncertainties
+* limitations
+* implications
+* recommended next experiments/research
+* source provenance
+
+The report should explain the scientific result rather than narrating every action the agent performed.
+
+## Project architecture
+
+Design the smallest sensible directory/file structure.
+
+Prefer plain-text Markdown for instructions, state, notes, and reports; use structured formats such as JSON/YAML/CSV only where they provide a real functional advantage.
+
+At minimum, consider whether the system needs equivalents of:
+
+* a project definition/objective file
+* project-specific context
+* current research state
+* source/evidence storage
+* analysis/code/data locations
+* final outputs
+
+However, **do not blindly create this exact structure**. Determine the minimal architecture that best satisfies the requirements.
+
+Separate:
+
+**Human-authored inputs**
+from
+**Agent-maintained state**
+from
+**Research artifacts**
+from
+**Final outputs**
+
+Make it obvious which files humans normally edit and which files the autonomous agent owns.
+
+## Template usability
+
+The completed template must be understandable to someone opening the directory for the first time.
+
+Include a short README explaining:
+
+* what the system is
+* how to create a research project
+* the minimum information the human must provide
+* which files the human should edit
+* how to launch the autonomous agent
+* how to resume an interrupted project
+* how to inspect progress
+* how completion works
+
+A new project should ideally require editing only one or two short files.
+
+Provide concise placeholders and examples showing the expected level of detail. Avoid forcing the user to write information that a capable research agent can discover independently.
+
+## Agent operating instructions
+
+Include a reusable agent instruction file that tells a capable research agent how to operate inside the project.
+
+It should be sufficiently general to work across scientific and technical research topics.
+
+The operating instructions should emphasize autonomy and outcomes rather than micromanaging the model.
+
+Do not fill the instruction file with generic exhortations such as “be intelligent,” “think deeply,” or “be rigorous.” Include instructions only when they materially affect research behavior, continuity, evidence quality, or autonomy.
+
+The operating instructions must tell the agent how to:
+
+* initialize a new project
+* inspect existing state
+* select the next research action
+* maintain state
+* manage sources and evidence
+* use calculations/code
+* use parallel/subagent research when useful
+* challenge its current conclusions
+* recover after interruption
+* recognize blockers
+* decide when to terminate
+* produce the final synthesis
+
+## Handoff and resumability
+
+Assume the agent performing iteration 20 may not be the same agent that performed iteration 1.
+
+Design the project so a fresh capable agent can resume by reading a small number of canonical files rather than reconstructing the entire history.
+
+Detailed logs may exist for auditability, but the agent should not normally need to reread the entire log to resume.
+
+Avoid relying on hidden conversational memory for essential project state.
+
+## Research history
+
+Preserve enough history to understand major changes in interpretation, important rejected hypotheses, and consequential decisions.
+
+Do not require exhaustive chain-of-thought logging.
+
+Record decisions and their evidential basis, not private reasoning traces.
+
+For example:
+
+`Hypothesis X rejected because measurements A and B contradict prediction C; see sources/calculation Y.`
+
+is useful.
+
+A transcript of every reasoning step is not.
+
+## Scalability
+
+The same template should work for:
+
+* a small question resolved in an hour;
+* a literature-heavy investigation;
+* a theoretical or computational investigation;
+* analysis of experimental data;
+* a multi-day autonomous research project;
+* a project using multiple specialized subagents.
+
+The architecture should grow only when the project requires it.
+
+## Your task
+
+Now design and create the complete reusable template.
+
+Do not conduct research on a particular topic.
+
+First reason about the architecture and remove unnecessary complexity. Then create the actual directory structure and populate every necessary template file with concise, usable content.
+
+The result should be a **working research system, not merely a proposal describing one**.
+
+After creating it, perform a self-review by simulating these scenarios:
+
+1. A human starts a project with only a research question and two paragraphs of private context.
+2. An agent works autonomously for many iterations.
+3. The process is interrupted and a fresh agent takes over.
+4. Several initially plausible hypotheses are disproven.
+5. Literature remains ambiguous and a new experiment is required.
+6. The objective is successfully resolved.
+
+Check whether the template handles each scenario without unnecessary human intervention.
+
+Simplify the system again if any component does not clearly contribute to autonomy, scientific reliability, provenance, resumability, or human readability.
+
+Finally, provide:
+
+1. the resulting directory tree;
+2. a one-paragraph explanation of the architecture;
+3. the minimum steps a human takes to start a new research project;
+4. the exact short command/prompt used to launch the autonomous research run.
