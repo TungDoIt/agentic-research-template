@@ -4,19 +4,29 @@ A small, tool-agnostic workspace for investigating a question, testing explanati
 
 ## Start a project
 
-1. Copy this template into a new project directory, or create a repository from it. Start with the blank template files, not the state of a previous investigation. `starter prompt.txt`, if present, is the template's design brief and is not needed in new projects.
-2. Edit [PROJECT.md](PROJECT.md). Only the objective is required. Add private context, supplied-file links, constraints, or a stopping limit if they matter. The agent derives practical success criteria and discovers public background itself.
-3. Open the directory in a capable research agent and send:
+**Human–agent discussion → project setup → persistent research loop.**
 
-   > Read AGENTS.md and start or resume the research defined in PROJECT.md.
+1. Discuss your research idea naturally with a capable research agent. Explain what you want to learn and share any relevant private context, resources, or constraints. You do not need to design a brief or research plan.
+2. Copy this template into a new project directory, or create a repository from it, using the blank template files. Open that directory in the agent with the discussion available; if switching conversations, bring a summary and links to supplied materials. The template's design-prompt history is not needed in new projects.
+3. Send the setup prompt below. The agent writes [PROJECT.md](PROJECT.md) and initializes [STATE.md](STATE.md), leaving the project ready to run.
 
-For example, an objective could be: “Which of the two supplied calibration methods better explains the drift in our sensor measurements?” Two short paragraphs about the apparatus and known anomalies, plus a link to the measurements, are sufficient context. Do not write a literature review or a research plan to get started.
+### Set up from the discussion
+
+> Read AGENTS.md and set up this new research project from our preceding discussion. Write PROJECT.md with the objective, relevant context, constraints, supplied resources, desired outputs, stopping conditions, and important unknowns. Initialize STATE.md with inferred practical success criteria, labeled assumptions, the key uncertainty, and a concrete next action. Preserve supplied originals and distinguish human-provided information from agent inference. Ask only for essential inaccessible information or consequential choices that depend on my priorities; do not ask me for discoverable background or a research plan. Keep setup compact and stop with the workspace ready for the research loop.
+
+Only a research question is required; the agent can help phrase it from the discussion. For example: “I want to understand why these sensor measurements drift and whether either of our two calibration methods explains it.” A little context about the apparatus and links to the measurements are enough to set up that investigation. The agent infers what a useful answer would establish and discovers public background during research. You can also edit `PROJECT.md` directly and proceed to the loop prompt.
+
+### Start or resume the research loop
+
+> Read AGENTS.md and start or resume the research defined in PROJECT.md.
+
+Use this same prompt for the first research run and after interruptions. Setup is needed only for a new project; the saved files carry the discussion's essential context into later runs.
 
 ## Files and ownership
 
 | File | Owner | Purpose |
 | --- | --- | --- |
-| [PROJECT.md](PROJECT.md) | Human | Objective, context, constraints, and links to supplied materials. |
+| [PROJECT.md](PROJECT.md) | Human; agent may draft during setup | Research intent, context, supplied resources, constraints, desired outputs, stopping conditions, and known unknowns. |
 | [AGENTS.md](AGENTS.md) | Template maintainer | Operating instructions, evidence conventions, and stopping rules. |
 | [STATE.md](STATE.md) | Agent | Current answer, uncertainty, alternatives, and a concrete handoff. |
 | [evidence/RECORDS.md](evidence/RECORDS.md) | Agent | Traceable evidence and consequential decisions. |
@@ -30,13 +40,13 @@ Add folders only when useful:
 - `analysis/`: calculations, scripts, derived data, models, and their run instructions.
 - `outputs/`: the final report and any supporting figures or deliverables.
 
-The agent normally edits state, evidence, analysis, and outputs. It preserves the human brief and supplied originals. Large investigations may split evidence into linked topic files; they retain the same entry point and stable record links. No database, package installation, or fixed research pipeline is required for the core template.
+After setup, the agent normally edits state, evidence, analysis, and outputs. It preserves the human brief and supplied originals; inferred success criteria, assumptions, and proposed scope changes belong in state. Large investigations may split evidence into linked topic files; they retain the same entry point and stable record links. No database, package installation, or fixed research pipeline is required for the core template.
 
 ## Progress, interruption, and completion
 
 Read [STATE.md](STATE.md) for the current interpretation and highest-value next action. Follow its evidence links to audit important claims. Its status describes the last saved checkpoint, not whether an agent process is currently running. Evidence records distinguish observations, source results, calculations, and interpretations; decision records explain major changes without recording private reasoning traces.
 
-To resume, use the same launch prompt. A fresh agent reads `AGENTS.md`, `PROJECT.md`, and `STATE.md`, then only the records and artifacts needed for the next action. It verifies unfinished work before repeating it. If the host ends a run or loses context, restart with that prompt; the files provide continuity within the host's execution limits.
+To resume, use the [research loop prompt](#start-or-resume-the-research-loop). A fresh agent reads `AGENTS.md`, `PROJECT.md`, and `STATE.md`, then only the records and artifacts needed for the next action. It verifies unfinished work before repeating it. If the host ends a run or loses context, restart with that prompt; the files provide continuity within the host's execution limits.
 
 The agent handles routine reversible decisions. It asks for human input when essential inaccessible information, a consequential preference, changed scope, or an action requiring authorization prevents progress. Existing authorization continues to apply, and independent useful work can continue while an answer is pending.
 
