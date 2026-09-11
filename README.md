@@ -29,7 +29,7 @@ Use this same prompt for the first research run and after interruptions. Setup i
 | [PROJECT.md](PROJECT.md) | Human; agent may draft during setup | Research intent, context, supplied resources, constraints, desired outputs, stopping conditions, and known unknowns. |
 | [AGENTS.md](AGENTS.md) | Template maintainer | Operating instructions, evidence conventions, and stopping rules. |
 | [STATE.md](STATE.md) | Agent | Current answer, uncertainty, alternatives, and a concrete handoff. |
-| [evidence/RECORDS.md](evidence/RECORDS.md) | Agent | Traceable evidence and consequential decisions. |
+| [evidence/RECORDS.md](evidence/RECORDS.md) | Agent | Traceable evidence, consequential human input, and agent decisions. |
 | [outputs/REPORT.md](outputs/REPORT.md) | Agent | Final synthesis; initially an explicitly unfinished outline. |
 | [README.md](README.md) | Template maintainer | How to use the project. |
 
@@ -42,11 +42,21 @@ Add folders only when useful:
 
 After setup, the agent normally edits state, evidence, analysis, and outputs. It preserves the human brief and supplied originals; inferred success criteria, assumptions, and proposed scope changes belong in state. Large investigations may split evidence into linked topic files; they retain the same entry point and stable record links. No database, package installation, or fixed research pipeline is required for the core template.
 
+## Human steering without conversation logs
+
+You can steer the investigation in conversation or by editing `PROJECT.md`. During setup and research, the agent preserves consequential input in the existing [evidence/RECORDS.md](evidence/RECORDS.md) with stable `H001`, `H002`, etc. IDs: objective or scope changes, constraints, priorities, important clarifications, supplied hypotheses or observations, authorization for experiments or external actions, and stopping decisions.
+
+Each compact record keeps a timestamp with timezone (or a labeled capture time if the input time is unknown), type, relevant human wording or labeled paraphrase, the agent's separate interpretation, and the effect on research state. Related points can share a record. Applicable steering and authorization are summarized and linked from `STATE.md` before dependent action or handoff. Later changes or revocations get a new linked record, preserving history while making current instructions clear. The brief remains human-owned; a later explicit instruction can apply without requiring you to rewrite it.
+
+The distinction is **human-provided information (`H`) → agent interpretation → evidence (`E`) → research conclusion**. For example, “I observed drift above 40 °C” is a human-reported observation in `H`; analysis of supplied measurements belongs in a linked `E` record stating what was checked. A consequential agent decision belongs in `D`, linked to its human and evidential basis as applicable. Simple steering needs only `H`; there is no requirement to create all three record types for every input. Authorization preserves its stated limits and is not evidence for a scientific claim.
+
+Routine conversation, exhaustive transcripts, private reasoning, and unrelated personal detail are not stored. The records preserve what changes the investigation, not a message-by-message history.
+
 ## Progress, interruption, and completion
 
 Read [STATE.md](STATE.md) for the current interpretation and highest-value next action. Follow its evidence links to audit important claims. Its status describes the last saved checkpoint, not whether an agent process is currently running. Evidence records distinguish observations, source results, calculations, and interpretations; decision records explain major changes without recording private reasoning traces.
 
-To resume, use the [research loop prompt](#start-or-resume-the-research-loop). A fresh agent reads `AGENTS.md`, `PROJECT.md`, and `STATE.md`, then only the records and artifacts needed for the next action. It verifies unfinished work before repeating it. If the host ends a run or loses context, restart with that prompt; the files provide continuity within the host's execution limits.
+To resume, use the [research loop prompt](#start-or-resume-the-research-loop). A fresh agent reads `AGENTS.md`, `PROJECT.md`, and `STATE.md`, reconciles the brief with applicable human-input records, then reads the other records and artifacts needed for the next action. It verifies unfinished work before repeating it. If the host ends a run or loses context, restart with that prompt; the files provide continuity within the host's execution limits.
 
 The agent handles routine reversible decisions. It asks for human input when essential inaccessible information, a consequential preference, changed scope, or an action requiring authorization prevents progress. Existing authorization continues to apply, and independent useful work can continue while an answer is pending.
 

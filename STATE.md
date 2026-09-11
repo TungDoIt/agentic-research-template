@@ -1,10 +1,10 @@
 # Current research state
 
-Agent-maintained snapshot. Keep it concise and link detail to evidence or artifacts. This is the last saved checkpoint, not a live process indicator.
+Agent-maintained snapshot. Keep it concise and link detail to evidence or artifacts. Summarize applicable human steering and authorization in the relevant fields with links to H records; distinguish human-reported information from checked evidence. This is the last saved checkpoint, not a live process indicator.
 
 - **Status:** not started (also after setup; `active`, `blocked`, or `finished` during research)
 - **Last checkpoint:** none; use date, time, and timezone
-- **Scope and success criteria:** derive from `PROJECT.md` during setup or the first research run; distinguish inferred criteria from human requirements
+- **Scope and success criteria:** derive from `PROJECT.md` and applicable H records during setup or the first research run; distinguish inferred criteria from human requirements
 - **Applicable constraints / stopping limit:** not assessed
 
 ## Current answer

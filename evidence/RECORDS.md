@@ -1,6 +1,6 @@
-# Evidence and decision records
+# Evidence, decision, and human-input records
 
-Agent-maintained. No research records exist yet. Add only material that supports continuity, auditability, or a conclusion. Use ID-only headings such as `## E001` and `## D001`; put a descriptive title beneath the heading. Links then stay stable when descriptions change. From the project root use `[E001](evidence/RECORDS.md#e001)`; from `outputs/REPORT.md` use `[E001](../evidence/RECORDS.md#e001)`. These examples refer to a record you would create. Existing IDs must not be renamed or reused.
+Agent-maintained. No research records exist yet. Add only material that supports continuity, auditability, or a conclusion. Use ID-only headings such as `## E001`, `## D001`, and `## H001`; put a descriptive title beneath the heading. Links then stay stable when descriptions change. From the project root use `[E001](evidence/RECORDS.md#e001)`; from `outputs/REPORT.md` use `[E001](../evidence/RECORDS.md#e001)`. Use the same link pattern for D and H records. These examples refer to a record you would create. Existing IDs must not be renamed or reused.
 
 The formats below are templates, not findings. Adapt fields to the evidence; combine related facts instead of creating repetitive records. Remove this introductory guidance when it is no longer useful. If splitting records across topic files, keep this entry point and preserve existing links.
 
@@ -30,9 +30,25 @@ Reuse provenance by linking an existing record for the same source and specifyin
 **Short decision**
 
 - Date: YYYY-MM-DD, with time and timezone when useful.
-- Decision / change: the adopted interpretation, rejected hypothesis, consequential assumption, or scope decision.
-- Basis: concise evidence-based justification, linking relevant E records or artifacts and any consequential contrary evidence.
+- Decision / change: the agent's adopted interpretation, rejected hypothesis, consequential assumption, or scope decision.
+- Basis: concise justification, linking originating H records, relevant E records or artifacts, and any consequential contrary evidence as applicable. Separate human direction from evidential support.
 - Consequence / reconsider when: what changes next, and which new evidence or input could reverse this decision.
 ```
 
-No exhaustive search diary or private reasoning transcript is required. Record a failed avenue when it matters to the interpretation, prevents duplicated work, or supports the stopping rationale.
+## Human-input record format
+
+```markdown
+## H001
+
+**Short description of consequential input**
+
+- Timestamp: YYYY-MM-DD HH:MM timezone; identify as input time or capture time, noting uncertainty when the input time is unknown.
+- Type: scope/objective change | constraint | priority | clarification | hypothesis | observation | authorization | stopping decision
+- Human input: short exact quote when wording matters, otherwise a labeled paraphrase; identify origin (conversation instruction, brief section, or supplied material) and a locator if available.
+- Agent interpretation: operational meaning, separate from the human's statement; note consequential ambiguity and what remains unverified.
+- Effect on research state: changed scope, assumptions, priorities, permitted actions, queued work, or stopping status; link related H, D, E records or artifacts where useful.
+```
+
+Capture consequential input promptly, before dependent action or handoff, and link it from the applicable `STATE.md` fields. Group related points; do not create a D or E record merely to repeat H. Preserve authorization scope, limits, conditions, expiry, or revocation when stated. For changed or withdrawn input, add a new H record, link both records, and update state; mark only the affected points in the earlier record superseded or withdrawn without erasing its original content. Unaffected instructions remain applicable. Human-reported observations and hypotheses are not independently verified evidence: link any subsequent check in E back to H.
+
+Do not store routine conversation, exhaustive transcripts, private reasoning, or unrelated personal detail. Record a failed avenue when it matters to the interpretation, prevents duplicated work, or supports the stopping rationale.
