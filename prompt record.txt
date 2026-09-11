@@ -1,3 +1,4 @@
+prompt 1 =============================================================================================
 Create a reusable project template for autonomous, agentic research.
 
 ## Purpose
@@ -315,3 +316,179 @@ Finally, provide:
 2. a one-paragraph explanation of the architecture;
 3. the minimum steps a human takes to start a new research project;
 4. the exact short command/prompt used to launch the autonomous research run.
+
+
+
+
+
+prompt 2 =============================================================================================
+Improve the agentic-research-template with a clearer new-project setup workflow:
+
+human–agent discussion → project setup → persistent research loop
+
+A user should be able to discuss a research idea naturally with an agent instead of manually designing PROJECT.md.
+
+Add a compact canonical setup prompt that tells the agent to translate the preceding discussion into the project workspace: objective, relevant context, constraints, supplied resources, desired outputs, stopping conditions, and important unknowns.
+
+The agent should infer reasonable research success criteria and avoid asking the human to provide discoverable background or a research plan.
+
+Then retain one short reusable prompt to start or resume the persistent research loop.
+
+Update README and relevant guidance accordingly. Keep the workflow minimal and avoid additional scaffolding.
+
+
+prompt 3  =============================================================================================
+Improve the agentic-research-template to preserve consequential human input and decision provenance without logging full conversations.
+
+Record important human inputs such as:
+- objective or scope changes
+- research constraints
+- priority changes
+- important clarifications
+- supplied hypotheses or observations
+- authorization for experiments or external actions
+- stopping decisions
+
+Keep each record compact: timestamp, type, relevant human wording when important, interpretation, and effect on the research state.
+
+Prefer integrating this into the existing evidence/decision record system, for example with stable H001, H002... human-input records, rather than adding unnecessary files.
+
+Clearly distinguish:
+human-provided information → agent interpretation → evidence → research conclusion.
+
+Do not store routine conversation, private reasoning, or exhaustive transcripts.
+
+Update AGENTS.md and README so consequential human steering survives context loss and agent handoff while preserving the template's low-bureaucracy design.
+
+
+
+prompt 4  =============================================================================================
+Review the current `agentic-research-template` and improve its support for rigorous theoretical, mathematical, and computational research.
+
+Preserve the template's minimal, tool-agnostic, adaptive philosophy. Do not turn it into a fixed pipeline or install a large mandatory scientific stack.
+
+Add clear guidance for **capability escalation** when the research question requires it.
+
+Future agents should be able to move appropriately through:
+
+* conceptual/analytic reasoning;
+* numerical exploration;
+* high-precision computation;
+* symbolic and exact mathematics;
+* graph/combinatorial exploration;
+* optimization and counterexample search;
+* constraint solving;
+* independent reproduction;
+* conventional mathematical proof;
+* optional formal verification.
+
+Establish a general promotion principle such as:
+
+`observation → robust pattern → conjecture → adversarial test → exact result → proof → optional formal verification`
+
+while emphasizing that research need not follow these steps in order.
+
+Add guidance for selecting suitable tools when available, for example Python scientific computing, arbitrary precision, CAS/symbolic algebra, graph tools, optimization/SMT solvers, SageMath/Wolfram-class systems, and Lean/Mathlib or comparable proof assistants.
+
+Do not require any particular implementation or vendor.
+
+Explicitly distinguish:
+
+* floating-point numerical evidence;
+* high-precision verification;
+* exact symbolic results;
+* solver-certified results;
+* analytic proofs;
+* formally machine-checked proofs.
+
+Require consequential mathematical conjectures to be subjected to active counterexample search where practical. Failure to find a counterexample must never be treated as proof.
+
+Encourage minimal examples, limiting cases, exactification of numerical patterns, alternative derivations, and independent verification of surprising results.
+
+Add guidance that formal proof tools should normally be used only after a theorem candidate is precise, consequential, and has survived substantial falsification. Formalization should not replace exploratory mathematics.
+
+Update `AGENTS.md`, `ARCHITECTURE.md`, README guidance, and templates only where necessary. Keep the core project lightweight; optional heavyweight capabilities should remain optional and project-driven.
+
+Add no project-specific physics or mathematics content.
+
+Review the final changes for duplication and prune aggressively.
+
+Do not run a research investigation. Do not commit or push.
+
+
+
+prompt 5  =============================================================================================
+Review the current `agentic-research-template` and improve how large investigations preserve and communicate the relationships between accumulated knowledge.
+
+The existing `STATE.md` should remain a concise current snapshot, and `evidence/RECORDS.md` should remain the canonical provenance record. Do not replace them or duplicate their contents.
+
+Add an **optional high-order research knowledge map** for investigations where evidence, hypotheses, literature, proofs, and counterexamples become too interconnected to understand from a linear evidence log.
+
+The map should be claim-centered rather than file-centered.
+
+Represent important entities such as:
+
+* research questions;
+* definitions and concepts;
+* assumptions;
+* hypotheses and conjectures;
+* established prior results;
+* project results;
+* counterexamples;
+* evidence records;
+* methods;
+* literature sources;
+* unresolved questions;
+* novelty risks.
+
+Represent meaningful relations such as:
+
+* supports;
+* contradicts;
+* falsifies;
+* depends_on;
+* assumes;
+* proves;
+* verifies;
+* generalizes;
+* special_case_of;
+* supersedes;
+* novelty_compared_with;
+* motivates;
+* leaves_open.
+
+Do not require a graph database. Prefer a simple version-controlled representation such as YAML, JSON, or another transparent format when a structured map is useful.
+
+Allow lightweight generated visualizations such as Graphviz, Mermaid, or an optional interactive graph.
+
+Define a few useful human views:
+
+1. **Main research story** — question → central results → significance → frontier.
+2. **Claim–evidence map** — why each important claim is believed or challenged.
+3. **Assumption/theorem dependency map** — which results depend on which assumptions.
+4. **Research evolution map** — conjecture → test → counterexample → revised result.
+5. **Literature/novelty map** — how project claims relate to closest prior results.
+6. **Open-frontier map** — proved, conjectured, falsified, unresolved, unexplored.
+
+Keep detailed evidence in `evidence/`; the knowledge map should reference stable evidence IDs rather than copy evidence.
+
+Add lightweight validation where useful to expose:
+
+* consequential claims without evidence;
+* theorem candidates with unclear assumptions;
+* claims depending on falsified results;
+* project results without novelty comparison;
+* orphaned evidence;
+* unresolved contradictions.
+
+Make this capability **adaptive**: small investigations should not create a knowledge graph at all. Introduce it only when relationship complexity materially harms human or agent understanding.
+
+Also strengthen provenance for consequential human steering: when a human prompt changes the objective, scope, assumptions, or research direction, preserve the relevant input or decision sufficiently to reconstruct why the project changed. Do not log every conversational message or private reasoning trace.
+
+Update `AGENTS.md`, `ARCHITECTURE.md`, README, and evidence/state guidance consistently.
+
+Preserve the template's low-bureaucracy philosophy and its existing stable evidence/decision IDs.
+
+Review and prune the resulting changes aggressively.
+
+Do not run an actual research project. Do not commit or push.
