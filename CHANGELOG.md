@@ -41,6 +41,15 @@ All notable changes to this template are documented here. The format is based on
 
 ### Changed
 
+- Rewrote the research loop prompt. The previous one-liner delegated everything to
+  `AGENTS.md`, which is the right instinct, but carried no posture: nothing told
+  the agent to keep working through several actions, to decide routine reversible
+  things without asking, or to checkpoint before stopping. Those are the parts a
+  kickoff message has to supply, because they set stopping behaviour for the whole
+  run. It still points at `AGENTS.md` for every procedure rather than restating
+  it. Both prompts moved from blockquotes to fenced blocks so multi-paragraph text
+  copies cleanly; the setup prompt's wording is unchanged.
+  `.claude/commands/loop.md` is kept byte-identical to the README prompt.
 - `ARCHITECTURE.md`: the research loop diagram now shows resume reconciliation,
   saving records before state and clearing the in-flight entry last, and the
   no-new-evidence path to changing method, recording a ruled-out avenue, or
