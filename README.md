@@ -11,7 +11,7 @@ A small, tool-agnostic workspace for investigating a question, testing explanati
 3. Send the setup prompt below. The agent writes [PROJECT.md](PROJECT.md) and initializes [STATE.md](STATE.md), leaving the project ready to run.
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'fontSize': '18px'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'fontSize': '18px', 'lineColor': '#768390'}}}%%
 flowchart TD
     D[Discuss the research idea] --> S[Setup prompt:<br/>write the brief]
     S --> L[Loop prompt:<br/>autonomous research]
@@ -110,7 +110,7 @@ To resume, use the [research loop prompt](#start-or-resume-the-research-loop). A
 `STATE.md`'s Loop continuity section is what makes a long investigation safe to interrupt: it names the current checkpoint owner, any in-flight action whose outcome is unknown, how many attempts the current question has taken, and the avenues already ruled out. A successor resolves that section before dependent work, so an interrupted operation is checked rather than assumed and a known dead end is not repeated. See the [persistent loop robustness rules](AGENTS.md#persistent-loop-robustness).
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'fontSize': '18px'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'fontSize': '18px', 'lineColor': '#768390'}}}%%
 flowchart TD
     R[Run starts or resumes] --> RC[Reconcile Loop continuity]
     RC --> IF{In-flight action?}
