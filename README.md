@@ -42,6 +42,8 @@ Add folders only when useful:
 
 After setup, the agent normally edits state, evidence, analysis, and outputs. It preserves the human brief and supplied originals; inferred success criteria, assumptions, and proposed scope changes belong in state. Large investigations may split evidence into linked topic files; they retain the same entry point and stable record links. No database, package installation, or fixed research pipeline is required for the core template.
 
+For Claude Code users, `CLAUDE.md` points at these same files and `.claude/commands/setup.md` and `.claude/commands/loop.md` expose the two prompts above as `/setup` and `/loop`. Maintainers can run `python3 tools/validate_template.py .` to check the template's structure and that `STATE.md` / `outputs/REPORT.md` remain uninitialized; the same check runs in CI (`.github/workflows/validate.yml`). A `.gitignore` keeps local credentials and private working data out of version control. See `CHANGELOG.md` for template history and `LICENSE` (MIT) for reuse terms.
+
 ## Human steering without conversation logs
 
 You can steer the investigation in conversation or by editing `PROJECT.md`. During setup and research, the agent preserves consequential input in the existing [evidence/RECORDS.md](evidence/RECORDS.md) with stable `H001`, `H002`, etc. IDs: objective or scope changes, constraints, priorities, important clarifications, supplied hypotheses or observations, authorization for experiments or external actions, and stopping decisions.
