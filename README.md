@@ -11,14 +11,15 @@ A small, tool-agnostic workspace for investigating a question, testing explanati
 3. Send the setup prompt below. The agent writes [PROJECT.md](PROJECT.md) and initializes [STATE.md](STATE.md), leaving the project ready to run.
 
 ```mermaid
-flowchart LR
-    D[Discuss the research idea] --> S[Setup prompt:<br/>write PROJECT.md, initialize STATE.md]
+%%{init: {'theme': 'base', 'themeVariables': {'fontSize': '18px'}}}%%
+flowchart TD
+    D[Discuss the research idea] --> S[Setup prompt:<br/>write the brief]
     S --> L[Loop prompt:<br/>autonomous research]
+    RS[Interrupted, or a new agent] --> L
     L --> RES{Objective resolved?}
-    RES -->|Yes| F[finished:<br/>synthesis in outputs/REPORT.md]
-    RES -->|Needs input| B[blocked:<br/>exact input needed to resume]
+    RES -->|Yes| F[finished:<br/>synthesis in the report]
+    RES -->|Needs input| B[blocked:<br/>exact input to resume]
     B -->|Input supplied| L
-    L -.->|Interrupted or new agent| L
 ```
 
 Setup runs once per project. The loop prompt is reusable: every later run, including a fresh agent, re-enters at the same point using the saved files. A finished project may be an answer, a qualified answer, surviving alternatives, a negative result, or a currently unresolvable question.
@@ -76,20 +77,20 @@ To resume, use the [research loop prompt](#start-or-resume-the-research-loop). A
 `STATE.md`'s Loop continuity section is what makes a long investigation safe to interrupt: it names the current checkpoint owner, any in-flight action whose outcome is unknown, how many attempts the current question has taken, and the avenues already ruled out. A successor resolves that section before dependent work, so an interrupted operation is checked rather than assumed and a known dead end is not repeated. See the [persistent loop robustness rules](AGENTS.md#persistent-loop-robustness).
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'fontSize': '18px'}}}%%
 flowchart TD
-    R[Run starts or resumes] --> RC[Reconcile Loop continuity:<br/>owner, in-flight action, ruled-out list]
-    RC --> IF{In-flight action recorded?}
-    IF -->|Yes| VF[Outcome is UNKNOWN:<br/>check actual state, never assume]
-    IF -->|No| CH[Choose the next action,<br/>skipping anything already ruled out]
+    R[Run starts or resumes] --> RC[Reconcile Loop continuity]
+    RC --> IF{In-flight action?}
+    IF -->|Yes| VF[Outcome UNKNOWN:<br/>check actual state]
+    IF -->|No| CH[Choose next action:<br/>skip what is ruled out]
     VF --> CH
-    CH --> WA[Record intent before an external,<br/>irreversible, costly or long action]
-    WA --> AC[Act]
-    AC --> WR[1. Save records and artifacts]
-    WR --> US[2. Update STATE.md to reference them]
-    US --> CL[3. Clear the in-flight entry]
-    CL --> PG{New evidence this cycle?}
+    CH --> WA[Record intent, then act]
+    WA --> WR[1. Save records and artifacts]
+    WR --> US[2. Update STATE.md]
+    US --> CL[3. Clear in-flight entry]
+    CL --> PG{New evidence?}
     PG -->|Yes| CH
-    PG -->|No| ES[Change method, rule the avenue out,<br/>or ask one specific question]
+    PG -->|No| ES[Change method,<br/>rule out, or ask]
     ES --> CH
 ```
 
