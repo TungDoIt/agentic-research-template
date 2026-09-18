@@ -229,6 +229,29 @@ def run(root: Path) -> None:
         "outputs/REPORT.md is not in its unfilled template state",
     )
 
+    # 5. persistent-loop continuity fields are present in the checkpoint, so a
+    #    successor always has somewhere to find in-flight work and dead ends.
+    for field in (
+        "loop continuity",
+        "session owner",
+        "in-flight action",
+        "attempts on current",
+        "ruled out / do not retry",
+    ):
+        check(field in state, f"STATE.md is missing the '{field}' field")
+
+    # The template ships with no in-flight action outstanding.
+    check(
+        re.search(r"\*\*in-flight action:\*\*\s*none", state) is not None,
+        "STATE.md must ship with an empty ('none') in-flight action",
+    )
+
+    agents = (root / "AGENTS.md").read_text(encoding="utf-8").lower()
+    check(
+        "persistent loop robustness" in agents,
+        "AGENTS.md is missing the persistent loop robustness rules",
+    )
+
 
 def main(argv: list[str]) -> int:
     root = Path(argv[1]).resolve() if len(argv) > 1 else Path(__file__).resolve().parent.parent
